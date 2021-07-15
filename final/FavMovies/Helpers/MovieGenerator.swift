@@ -133,6 +133,7 @@ When an open-minded Jewish librarian and his son become victims of the Holocaust
 humor, and imagination to protect his son from the dangers around their camp.
 """, releaseDate: DateHelper.getDate(using: "1990-09-09"))
 	]
+
 	newMovies.append(contentsOf: getMovies())
 	return newMovies
 	}
