@@ -32,18 +32,25 @@
 
 import SwiftUI
 
+
 struct MovieRow: View {
 	@Binding var movies: [Movie]
+	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
 
 	var body: some View {
-		List {
-			ForEach($movies) { $movie in
-				Text($movie.name.wrappedValue)
-			}
+		List($movies) { $movie in
+			VStack(alignment: .leading) {
+				Text("**\($movie.name.wrappedValue)**")
+				Spacer()
+				Text("*\($movie.desc.wrappedValue)*")
+				Spacer()
+				Text("Released on: \($movie.releaseDate.wrappedValue.formatted(.dateTime.year().day().month(wideMonthStyle)))")
+			}.listRowSeparatorTint(.red)
 		}
 	}
 }
 
+@available(iOS 15.0, *)
 struct MovieRow_Previews: PreviewProvider {
 	static var previews: some View {
 		MovieRow(movies: .constant([MovieGenerator.getPreviewMovie()]))

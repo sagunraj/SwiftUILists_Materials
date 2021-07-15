@@ -47,7 +47,7 @@ and eventual redemption through acts of common decency.
 Movie(
 	name: "The Shawshank Redemption",
 	desc: """
-"Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.
+Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.
 """, releaseDate: DateHelper.getDate(using: "1994-09-10")),
 Movie(
 	name: "The Godfather",
@@ -99,8 +99,41 @@ Movie(
 	name: "Star Wars: Episode V - The Empire Strikes Back",
 	desc: """
 After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke \
-Skywalker begins Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader ...
+Skywalker begins Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader \
+and bounty hunter Boba Fett.
 """, releaseDate: DateHelper.getDate(using: "1980-05-17"))
   ]
 }
+
+	static func getMoreMovies() -> [Movie] {
+	var newMovies = [
+Movie(
+	name: "Forrest Gump",
+	desc: """
+The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal and other historical events unfold \
+from the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood \
+sweetheart.
+""", releaseDate: DateHelper.getDate(using: "1994-06-23")),
+Movie(
+	name: "The Matrix",
+	desc: """
+When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the \
+life he knows is the elaborate deception of an evil cyber-intelligence.
+""", releaseDate: DateHelper.getDate(using: "1999-03-24")),
+Movie(
+	name: "Goodfellas",
+	desc: """
+The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob \
+partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate.
+""", releaseDate: DateHelper.getDate(using: "1990-09-09")),
+Movie(
+	name: "Life Is Beautiful",
+	desc: """
+When an open-minded Jewish librarian and his son become victims of the Holocaust, he uses a perfect mixture of will, \
+humor, and imagination to protect his son from the dangers around their camp.
+""", releaseDate: DateHelper.getDate(using: "1990-09-09"))
+	]
+	newMovies.append(contentsOf: getMovies())
+	return newMovies
+	}
 }
