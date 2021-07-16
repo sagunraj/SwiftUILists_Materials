@@ -35,24 +35,35 @@ import SwiftUI
 
 struct MovieRow: View {
 	@Binding var movies: [Movie]
+	@Binding var searchText: String
+
+	@Environment(\.isSearching) var isSearching
+
 	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
 
+	var searchResults: [Movie] {
+		if isSearching && !searchText.isEmpty {
+			return movies.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+		} else {
+			return movies
+		}
+	}
+
 	var body: some View {
-		List($movies) { $movie in
+		List(searchResults) { movie in
 			VStack(alignment: .leading) {
-				Text("**\($movie.name.wrappedValue)**")
+				Text("**\(movie.name)**")
 				Spacer()
-				Text("*\($movie.desc.wrappedValue)*")
+				Text("*\(movie.desc)*")
 				Spacer()
-				Text("Released on: \($movie.releaseDate.wrappedValue.formatted(.dateTime.year().day().month(wideMonthStyle)))")
-			}.listRowSeparatorTint(.red)
+				Text("Released on: \(movie.releaseDate.formatted(.dateTime.year().day().month(wideMonthStyle)))")
+			}
 		}
 	}
 }
 
-@available(iOS 15.0, *)
 struct MovieRow_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieRow(movies: .constant([MovieGenerator.getPreviewMovie()]))
+		MovieRow(movies: .constant([MovieGenerator.getPreviewMovie()]), searchText: .constant(""))
 	}
 }

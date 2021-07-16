@@ -34,13 +34,15 @@ import SwiftUI
 
 struct ContentView: View {
 	@State var movieList: [Movie] = MovieGenerator.getMovies()
+	@State var searchText = ""
 
 	var body: some View {
 		NavigationView {
-			MovieRow(movies: $movieList)
+			MovieRow(movies: $movieList, searchText: $searchText)
 				.navigationTitle("My Favorite Movies")
 				.refreshable(action: refreshMovieList)
 		}
+		.searchable(text: $searchText)
 	}
 
 	func refreshMovieList() {
