@@ -30,12 +30,78 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import SwiftUI
 
-struct Movie: Identifiable {
-  var id = UUID()
-  var name: String
-  var desc: String
-  var releaseDate: Date
-	var genre: Genre
+
+struct MovieList: View {
+	@Binding var movies: [Movie]
+	@Binding var searchText: String
+
+	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
+
+	@Environment(\.isSearching) var isSearching
+
+	var searchResults: [Movie] {
+		if isSearching && !searchText.isEmpty {
+			return movies.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+		} else {
+			return movies
+		}
+	}
+
+	var body: some View {
+		List {
+			if isSearching && !searchText.isEmpty {
+				ForEach(searchResults) { movie in
+					VStack(alignment: .leading) {
+						Text("**\(movie.name)**")
+						Spacer()
+						Text("*\(movie.desc)*")
+						Spacer()
+						Text("Released on: \(movie.releaseDate.formatted(.dateTime.year().day().month(wideMonthStyle)))")
+					}
+				}
+			} else {
+				MovieListRow(searchResults: $movies)
+			}
+		}
+	}
+}
+
+struct MovieRow_Previews: PreviewProvider {
+	static var previews: some View {
+		MovieList(movies: .constant([MovieGenerator.getPreviewMovie()]), searchText: .constant(""))
+	}
+}
+
+struct MovieDetailsView: View {
+	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
+
+	@Binding var movie: Movie
+	var body: some View {
+		VStack(alignment: .leading) {
+			Text("**\($movie.name.wrappedValue)**")
+			Spacer()
+			Text("*\($movie.desc.wrappedValue)*")
+			Spacer()
+			Text("Released on: \($movie.releaseDate.wrappedValue.formatted(.dateTime.year().day().month(wideMonthStyle)))")
+		}
+	}
+}
+
+struct MovieListRow: View {
+	@Binding var searchResults: [Movie]
+	var body: some View {
+		ForEach(Genre.allCases, id: \.self) { genre in
+			Section {
+				ForEach($searchResults) { $movie in
+					if $movie.genre.wrappedValue == genre {
+						MovieDetailsView(movie: $movie)
+					}
+				}
+			} header: {
+				Text(genre.rawValue)
+			}
+		}.headerProminence(.increased)
+	}
 }

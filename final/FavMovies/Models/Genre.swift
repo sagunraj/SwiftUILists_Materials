@@ -30,40 +30,14 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-
-struct MovieRow: View {
-	@Binding var movies: [Movie]
-	@Binding var searchText: String
-
-	@Environment(\.isSearching) var isSearching
-
-	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
-
-	var searchResults: [Movie] {
-		if isSearching && !searchText.isEmpty {
-			return movies.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-		} else {
-			return movies
-		}
-	}
-
-	var body: some View {
-		List(searchResults) { movie in
-			VStack(alignment: .leading) {
-				Text("**\(movie.name)**")
-				Spacer()
-				Text("*\(movie.desc)*")
-				Spacer()
-				Text("Released on: \(movie.releaseDate.formatted(.dateTime.year().day().month(wideMonthStyle)))")
-			}
-		}
-	}
-}
-
-struct MovieRow_Previews: PreviewProvider {
-	static var previews: some View {
-		MovieRow(movies: .constant([MovieGenerator.getPreviewMovie()]), searchText: .constant(""))
-	}
+enum Genre: String, CaseIterable {
+	case drama = "Drama"
+	case action = "Action"
+	case biography = "Biography"
+	case western = "Western"
+	case sciFi = "Sci-Fi"
+	case romance = "Romance"
+	case comedy = "Comedy"
 }

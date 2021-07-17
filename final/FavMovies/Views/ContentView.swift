@@ -38,7 +38,7 @@ struct ContentView: View {
 
 	var body: some View {
 		NavigationView {
-			MovieRow(movies: $movieList, searchText: $searchText)
+			MovieList(movies: $movieList, searchText: $searchText)
 				.navigationTitle("My Favorite Movies")
 				.refreshable(action: refreshMovieList)
 		}
@@ -46,9 +46,7 @@ struct ContentView: View {
 	}
 
 	func refreshMovieList() {
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-			movieList = MovieGenerator.getMoreMovies()
-		}
+		movieList = MovieGenerator.getMoreMovies()
 	}
 }
 
