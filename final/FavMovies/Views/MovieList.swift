@@ -42,11 +42,7 @@ struct MovieList: View {
 	@Environment(\.isSearching) var isSearching
 
 	var searchResults: [Movie] {
-		if isSearching && !searchText.isEmpty {
-			return movies.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-		} else {
-			return movies
-		}
+		return movies.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
 	}
 
 	var body: some View {
