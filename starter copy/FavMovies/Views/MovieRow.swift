@@ -32,80 +32,18 @@
 
 import SwiftUI
 
-
-struct MovieList: View {
+struct MovieRow: View {
 	@Binding var movies: [Movie]
-	@Binding var searchText: String
-
-	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
-
-	@Environment(\.isSearching) var isSearching
-
-	var searchResults: [Movie] {
-		return movies.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-	}
 
 	var body: some View {
-		List {
-			if isSearching && !searchText.isEmpty {
-				ForEach(searchResults) { movie in
-					VStack(alignment: .leading) {
-						Text("**\(movie.name)**")
-						Spacer()
-						Text("*\(movie.desc)*")
-						Spacer()
-						Text("Released on: \(movie.releaseDate.formatted(.dateTime.year().day().month(wideMonthStyle)))")
-					}
-				}
-			} else {
-				MovieListRow(movies: $movies)
-			}
+		List($movies) { $movie in
+			Text($movie.name.wrappedValue)
 		}
 	}
 }
 
 struct MovieRow_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieList(movies: .constant([MovieGenerator.getPreviewMovie()]), searchText: .constant(""))
-	}
-}
-
-struct MovieDetailsView: View {
-	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
-
-	@Binding var movie: Movie
-	var body: some View {
-		VStack(alignment: .leading) {
-			Text("**\($movie.name.wrappedValue)**")
-			Spacer()
-			Text("*\($movie.desc.wrappedValue)*")
-			Spacer()
-			Text("Released on: \($movie.releaseDate.wrappedValue.formatted(.dateTime.year().day().month(wideMonthStyle)))")
-		}
-	}
-}
-
-struct MovieListRow: View {
-	@Binding var movies: [Movie]
-
-	var body: some View {
-		ForEach(Genre.allCases, id: \.self) { genre in
-			Section {
-				ForEach($movies) { $movie in
-					if $movie.genre.wrappedValue == genre {
-						MovieDetailsView(movie: $movie)
-							.swipeActions {
-								Button(role: .destructive) {
-									movies.removeAll { $0.id == $movie.id.wrappedValue }
-								} label: {
-									Label("Delete", systemImage: "trash")
-								}
-							}
-					}
-				}
-			} header: {
-				Text(genre.rawValue)
-			}
-		}.headerProminence(.increased)
+		MovieRow(movies: .constant([MovieGenerator.getPreviewMovie()]))
 	}
 }
