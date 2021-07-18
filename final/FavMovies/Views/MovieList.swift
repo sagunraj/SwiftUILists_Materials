@@ -94,7 +94,7 @@ struct MovieListRow: View {
 				ForEach($movies) { $movie in
 					if $movie.genre.wrappedValue == genre {
 						MovieDetailsView(movie: $movie)
-							.swipeActions {
+							.swipeActions(allowsFullSwipe: true) {
 								Button(role: .destructive) {
 									movies.removeAll { $0.id == $movie.id.wrappedValue }
 								} label: {
