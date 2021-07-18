@@ -32,40 +32,23 @@
 
 import SwiftUI
 
-
-struct MovieList: View {
-	@Binding var movies: [Movie]
-	@Binding var searchText: String
-
+struct MovieDetailsView: View {
 	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
 
-	@Environment(\.isSearching) var isSearching
-
-	var searchResults: [Movie] {
-		return movies.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-	}
-
+	@Binding var movie: Movie
 	var body: some View {
-		List {
-			if isSearching && !searchText.isEmpty {
-				ForEach(searchResults) { movie in
-					VStack(alignment: .leading) {
-						Text("**\(movie.name)**")
-						Spacer()
-						Text("*\(movie.desc)*")
-						Spacer()
-						Text("Released on: \(movie.releaseDate.formatted(.dateTime.year().day().month(wideMonthStyle)))")
-					}
-				}
-			} else {
-				MovieListRow(movies: $movies)
-			}
+		VStack(alignment: .leading) {
+			Text("**\($movie.name.wrappedValue)**")
+			Spacer()
+			Text("*\($movie.desc.wrappedValue)*")
+			Spacer()
+			Text("Released on: \($movie.releaseDate.wrappedValue.formatted(.dateTime.year().day().month(wideMonthStyle)))")
 		}
 	}
 }
 
-struct MovieRow_Previews: PreviewProvider {
+struct MovieDetailsView_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieList(movies: .constant([MovieGenerator.getPreviewMovie()]), searchText: .constant(""))
+		MovieDetailsView(movie: .constant(MovieGenerator.getPreviewMovie()))
 	}
 }
