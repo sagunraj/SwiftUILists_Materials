@@ -143,7 +143,6 @@ fugitive husband escape the Nazis in French Morocco..
 				genre: .romance)
 		]
 	}
-	// swiftlint:enable function_body_length
 	
 	static func getMoreMovies() -> [Movie] {
 		var newMovies = [
