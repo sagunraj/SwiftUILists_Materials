@@ -44,7 +44,7 @@ and eventual redemption through acts of common decency.
 			releaseDate: DateHelper.getDate(using: "1994-09-10"),
 			genre: .drama)
 	}
-	// swiftlint:disable function_body_length
+	
 	static func getMovies() -> [Movie] {
 		return [
 			Movie(
@@ -144,7 +144,7 @@ fugitive husband escape the Nazis in French Morocco..
 		]
 	}
 	// swiftlint:enable function_body_length
-
+	
 	static func getMoreMovies() -> [Movie] {
 		var newMovies = [
 			Movie(
@@ -181,7 +181,7 @@ humor, and imagination to protect his son from the dangers around their camp.
 				releaseDate: DateHelper.getDate(using: "1990-09-09"),
 				genre: .comedy)
 		]
-
+		
 		newMovies.append(contentsOf: getMovies())
 		return newMovies
 	}
