@@ -33,13 +33,8 @@
 import SwiftUI
 
 struct ContentView: View {
-	@State var movieList: [Movie] = MovieGenerator.getMovies()
-
 	var body: some View {
-		NavigationView {
-			MovieRow(movies: $movieList)
-				.navigationTitle("My Favorite Movies")
-		}
+		Text("My Favorite Movies")
 	}
 }
 
