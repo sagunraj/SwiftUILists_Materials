@@ -29,8 +29,8 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
-// swiftlint:disable all
 
+// swiftlint:disable all
 import Foundation
 
 enum MovieGenerator {
@@ -49,7 +49,7 @@ and eventual redemption through acts of common decency.
 			Movie(
 				name: "The Shawshank Redemption",
 				desc: """
-"Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.
+Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.
 """,
 				releaseDate: DateHelper.getDate(using: "1994-09-10")),
 			Movie(
@@ -110,9 +110,24 @@ the divided fellowship makes a stand against Sauron's new ally, Saruman, and his
 				name: "Star Wars: Episode V - The Empire Strikes Back",
 				desc: """
 After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke \
-Skywalker begins Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader ...
+Skywalker begins Jedi training with Yoda, while his friends are pursued across the galaxy by Darth Vader \
+and bounty hunter Boba Fett.
 """,
-				releaseDate: DateHelper.getDate(using: "1980-05-17"))
+				releaseDate: DateHelper.getDate(using: "1980-05-17")),
+			Movie(
+				name: "The Intouchables",
+				desc: """
+After he becomes a quadriplegic from a paragliding accident, an aristocrat hires a young man from the projects to \
+be his caregiver.
+""",
+				releaseDate: DateHelper.getDate(using: "2011-09-23")),
+			Movie(
+				name: "Casablanca",
+				desc: """
+A cynical expatriate American cafe owner struggles to decide whether or not to help his former lover and her \
+fugitive husband escape the Nazis in French Morocco.
+""",
+				releaseDate: DateHelper.getDate(using: "1942-11-26"))
 		]
 	}
 
@@ -153,5 +168,4 @@ humor, and imagination to protect his son from the dangers around their camp.
 		return newMovies
 	}
 }
-
 // swiftlint:enable all
