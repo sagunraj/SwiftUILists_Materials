@@ -37,8 +37,6 @@ struct MovieList: View {
 	@Binding var movies: [Movie]
 	@Binding var searchText: String
 
-	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
-
 	@Environment(\.isSearching) var isSearching
 
 	var searchResults: [Movie] {
@@ -54,7 +52,7 @@ struct MovieList: View {
 						Spacer()
 						Text("*\(movie.desc)*")
 						Spacer()
-						Text("Released on: \(movie.releaseDate.formatted(.dateTime.year().day().month(wideMonthStyle)))")
+						Text("Released on: \(movie.releaseDate.formatted(.dateTime.year().day().month(.wide)))")
 					}
 				}
 			} else {

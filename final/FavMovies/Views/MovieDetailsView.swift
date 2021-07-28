@@ -33,8 +33,6 @@
 import SwiftUI
 
 struct MovieDetailsView: View {
-	let wideMonthStyle = Date.FormatStyle.Symbol.Month.wide
-
 	@Binding var movie: Movie
 	var body: some View {
 		VStack(alignment: .leading) {
@@ -42,7 +40,7 @@ struct MovieDetailsView: View {
 			Spacer()
 			Text("*\($movie.desc.wrappedValue)*")
 			Spacer()
-			Text("Released on: \($movie.releaseDate.wrappedValue.formatted(.dateTime.year().day().month(wideMonthStyle)))")
+			Text("Released on: \($movie.releaseDate.wrappedValue.formatted(.dateTime.year().day().month(.wide)))")
 		}
 	}
 }
