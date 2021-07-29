@@ -41,8 +41,8 @@ struct ContentView: View {
 			MovieList(movies: $movieList, searchText: $searchText)
 				.navigationTitle("My Favorite Movies")
 				.refreshable(action: refreshMovieList)
+				.searchable(text: $searchText)
 		}
-		.searchable(text: $searchText)
 	}
 
 	func refreshMovieList() {
