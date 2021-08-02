@@ -57,6 +57,7 @@ struct MovieList: View {
 				}
 			} else {
 				MovieListRow(movies: $movies)
+					.headerProminence(.increased)
 			}
 		}
 	}

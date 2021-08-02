@@ -53,7 +53,7 @@ struct MovieListRow: View {
 			} header: {
 				Text(genre.rawValue)
 			}
-		}.headerProminence(.increased)
+		}
 	}
 }
 
