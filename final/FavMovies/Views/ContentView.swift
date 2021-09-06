@@ -33,7 +33,7 @@
 import SwiftUI
 
 struct ContentView: View {
-	@State var movies: [Movie] = Bundle.main.decode([Movie].self, from: "movies.json")
+	@State var movies = Bundle.main.decode([Movie].self, from: "movies.json")
 	@State var searchText = ""
 
 	var body: some View {
