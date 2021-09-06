@@ -61,13 +61,6 @@ struct MovieListView: View {
 				ForEach(movies) { movie in
 					if movie.genre == genre {
 						movieRow(movie: movie)
-							.swipeActions(allowsFullSwipe: true) {
-								Button(role: .destructive) {
-									movies.removeAll { $0.id == movie.id }
-								} label: {
-									Label("Delete", systemImage: "trash")
-								}
-							}
 					}
 				}
 			} header: {
@@ -83,6 +76,13 @@ struct MovieListView: View {
 			Text("*\(movie.desc)*")
 			Spacer()
 			Text("Released on: \(movie.releaseDate.formatted(.dateTime.year().day().month(.wide)))")
+		}
+		.swipeActions(allowsFullSwipe: true) {
+			Button(role: .destructive) {
+				movies.removeAll { $0.id == movie.id }
+			} label: {
+				Label("Delete", systemImage: "trash")
+			}
 		}
 	}
 }
