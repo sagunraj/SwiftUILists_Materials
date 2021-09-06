@@ -1,4 +1,3 @@
-// swiftlint:disable all
 /// Copyright (c) 2021 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,24 +32,37 @@
 
 import Foundation
 
-enum MovieGenerator {
-	static func getPreviewMovie() -> Movie {
-		return Movie(
-			id: 1,
-			name: "The Shawshank Redemption",
-			desc: """
- Two imprisoned men bond over a number of years, finding solace \
- and eventual redemption through acts of common decency.
- """,
-			releaseDate: getDate(using: "1994-09-10"),
-			genre: .drama)
-	}
+extension Bundle {
+	func decode<T: Decodable>(
+		_ type: T.Type,
+		from file: String,
+		dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .iso8601,
+		keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys
+	) -> T {
+		guard let url = self.url(forResource: file, withExtension: nil) else {
+			fatalError("Failed to locate \(file) in bundle.")
+		}
 
-	static func getDate(using dateString: String) -> Date {
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyy-MM-dd"
-		dateFormatter.timeZone = TimeZone.current
-		dateFormatter.locale = Locale.current
-		return dateFormatter.date(from: dateString) ?? Date()
+		guard let data = try? Data(contentsOf: url) else {
+			fatalError("Failed to load \(file) from bundle.")
+		}
+
+		let decoder = JSONDecoder()
+		decoder.dateDecodingStrategy = dateDecodingStrategy
+		decoder.keyDecodingStrategy = keyDecodingStrategy
+
+		do {
+			return try decoder.decode(T.self, from: data)
+		} catch DecodingError.keyNotFound(let key, _) {
+			fatalError("Failed to decode \(file) from bundle due to missing key '\(key.stringValue)'")
+		} catch DecodingError.typeMismatch(_, let context) {
+			fatalError("Failed to decode \(file) from bundle due to type mismatch – \(context.debugDescription)")
+		} catch let DecodingError.valueNotFound(type, context) {
+			fatalError("Failed to decode \(file) from bundle due to missing \(type) value – \(context.debugDescription)")
+		} catch DecodingError.dataCorrupted(_) {
+			fatalError("Failed to decode \(file) from bundle because it appears to be invalid JSON")
+		} catch {
+			fatalError("Failed to decode \(file) from bundle: \(error.localizedDescription)")
+		}
 	}
 }
