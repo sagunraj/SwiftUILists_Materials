@@ -58,12 +58,12 @@ struct MovieListView: View {
 	var movieListWithGenres: some View {
 		ForEach(Genre.allCases, id: \.self) { genre in
 			Section {
-				ForEach($movies) { $movie in
-					if $movie.genre.wrappedValue == genre {
+				ForEach(movies) { movie in
+					if movie.genre == genre {
 						movieRow(movie: movie)
 							.swipeActions(allowsFullSwipe: true) {
 								Button(role: .destructive) {
-									movies.removeAll { $0.id == $movie.id.wrappedValue }
+									movies.removeAll { $0.id == movie.id }
 								} label: {
 									Label("Delete", systemImage: "trash")
 								}
