@@ -40,7 +40,9 @@ struct ContentView: View {
 		NavigationView {
 			MovieListView(movies: $movies, searchText: $searchText)
 				.navigationTitle("My Favorite Movies")
-				.refreshable(action: refreshMovieList)
+				.refreshable {
+					refreshMovieList()
+				}
 		}
 		.searchable(text: $searchText)
 	}
