@@ -84,6 +84,8 @@ struct MovieListView: View {
 				Label("Delete", systemImage: "trash")
 			}
 		}
+		.listRowSeparator(.visible)
+		.listRowSeparatorTint(nil)
 	}
 }
 
