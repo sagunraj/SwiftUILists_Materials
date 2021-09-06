@@ -32,21 +32,63 @@
 
 import SwiftUI
 
-struct MovieDetailsView: View {
-	@Binding var movie: Movie
+struct MovieListView: View {
+	@Binding var movies: [Movie]
+	@Binding var searchText: String
+
+	@Environment(\.isSearching) var isSearching
+
+	var searchResults: [Movie] {
+		return movies.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+	}
+
 	var body: some View {
+		List {
+			if isSearching && !searchText.isEmpty {
+				ForEach(searchResults) { movie in
+					movieRow(movie: movie)
+				}
+			} else {
+				movieListWithGenres
+					.headerProminence(.increased)
+			}
+		}
+	}
+
+	var movieListWithGenres: some View {
+		ForEach(Genre.allCases, id: \.self) { genre in
+			Section {
+				ForEach($movies) { $movie in
+					if $movie.genre.wrappedValue == genre {
+						movieRow(movie: movie)
+							.swipeActions(allowsFullSwipe: true) {
+								Button(role: .destructive) {
+									movies.removeAll { $0.id == $movie.id.wrappedValue }
+								} label: {
+									Label("Delete", systemImage: "trash")
+								}
+							}
+					}
+				}
+			} header: {
+				Text(genre.rawValue)
+			}
+		}
+	}
+
+	func movieRow(movie: Movie) -> some View {
 		VStack(alignment: .leading) {
-			Text("**\($movie.name.wrappedValue)**")
+			Text("**\(movie.name)**")
 			Spacer()
-			Text("*\($movie.desc.wrappedValue)*")
+			Text("*\(movie.desc)*")
 			Spacer()
-			Text("Released on: \($movie.releaseDate.wrappedValue.formatted(.dateTime.year().day().month(.wide)))")
+			Text("Released on: \(movie.releaseDate.formatted(.dateTime.year().day().month(.wide)))")
 		}
 	}
 }
 
-struct MovieDetailsView_Previews: PreviewProvider {
+struct MovieListView_Previews: PreviewProvider {
 	static var previews: some View {
-		MovieDetailsView(movie: .constant(MovieGenerator.getPreviewMovie()))
+		MovieListView(movies: .constant([MovieGenerator.getPreviewMovie()]), searchText: .constant(""))
 	}
 }

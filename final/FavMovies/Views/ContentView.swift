@@ -33,12 +33,12 @@
 import SwiftUI
 
 struct ContentView: View {
-	@State var movieList: [Movie] = MovieGenerator.getMovies()
+	@State var movies: [Movie] = Bundle.main.decode([Movie].self, from: "movies.json")
 	@State var searchText = ""
 
 	var body: some View {
 		NavigationView {
-			MovieList(movies: $movieList, searchText: $searchText)
+			MovieListView(movies: $movies, searchText: $searchText)
 				.navigationTitle("My Favorite Movies")
 				.refreshable(action: refreshMovieList)
 		}
@@ -46,7 +46,8 @@ struct ContentView: View {
 	}
 
 	func refreshMovieList() {
-		movieList = MovieGenerator.getMoreMovies()
+		movies = Bundle.main.decode([Movie].self, from: "more_movies.json")
+		+ Bundle.main.decode([Movie].self, from: "movies.json")
 	}
 }
 

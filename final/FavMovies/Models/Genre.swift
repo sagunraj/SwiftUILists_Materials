@@ -32,7 +32,7 @@
 
 import Foundation
 
-enum Genre: String, CaseIterable {
+enum Genre: String, CaseIterable, Codable {
 	case drama = "Drama"
 	case action = "Action"
 	case biography = "Biography"

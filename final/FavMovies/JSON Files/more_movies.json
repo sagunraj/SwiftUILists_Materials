@@ -1,0 +1,37 @@
+[
+  {
+		"id": 13,
+    "name": "Forrest Gump",
+    "desc": "The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal and other historical events unfold from the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart.",
+    "releaseDate": "1994-06-23T00:00:00Z",
+    "genre": "Romance"
+  },
+  {
+		"id": 14,
+    "name": "The Matrix",
+    "desc": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
+    "releaseDate": "1999-03-24T00:00:00Z",
+    "genre": "Sci-Fi"
+  },
+  {
+		"id": 15,
+    "name": "Goodfellas",
+    "desc": "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate.",
+    "releaseDate": "1990-09-09T00:00:00Z",
+    "genre": "Biography",
+  },
+  {
+		"id": 16,
+    "name": "Life Is Beautiful",
+    "desc": "When an open-minded Jewish librarian and his son become victims of the Holocaust, he uses a perfect mixture of will, humor, and imagination to protect his son from the dangers around their camp.",
+    "releaseDate": "1997-12-20T00:00:00Z",
+    "genre": "Comedy"
+  },
+	{
+		"id": 17,
+		"name": "The Dark Knight",
+		"desc": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+		"releaseDate": "2008-07-14T00:00:00Z",
+		"genre": "Drama"
+	}
+]

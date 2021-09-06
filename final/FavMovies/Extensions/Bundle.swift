@@ -30,35 +30,39 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-struct MovieListRow: View {
-	@Binding var movies: [Movie]
-
-	var body: some View {
-		ForEach(Genre.allCases, id: \.self) { genre in
-			Section {
-				ForEach($movies) { $movie in
-					if $movie.genre.wrappedValue == genre {
-						MovieDetailsView(movie: $movie)
-							.swipeActions(allowsFullSwipe: true) {
-								Button(role: .destructive) {
-									movies.removeAll { $0.id == $movie.id.wrappedValue }
-								} label: {
-									Label("Delete", systemImage: "trash")
-								}
-							}
-					}
-				}
-			} header: {
-				Text(genre.rawValue)
-			}
+extension Bundle {
+	func decode<T: Decodable>(
+		_ type: T.Type,
+		from file: String,
+		dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .iso8601,
+		keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys
+	) -> T {
+		guard let url = self.url(forResource: file, withExtension: nil) else {
+			fatalError("Failed to locate \(file) in bundle.")
 		}
-	}
-}
 
-struct MovieListRow_Previews: PreviewProvider {
-	static var previews: some View {
-		MovieListRow(movies: .constant([MovieGenerator.getPreviewMovie()]))
+		guard let data = try? Data(contentsOf: url) else {
+			fatalError("Failed to load \(file) from bundle.")
+		}
+
+		let decoder = JSONDecoder()
+		decoder.dateDecodingStrategy = dateDecodingStrategy
+		decoder.keyDecodingStrategy = keyDecodingStrategy
+
+		do {
+			return try decoder.decode(T.self, from: data)
+		} catch DecodingError.keyNotFound(let key, _) {
+			fatalError("Failed to decode \(file) from bundle due to missing key '\(key.stringValue)'")
+		} catch DecodingError.typeMismatch(_, let context) {
+			fatalError("Failed to decode \(file) from bundle due to type mismatch – \(context.debugDescription)")
+		} catch let DecodingError.valueNotFound(type, context) {
+			fatalError("Failed to decode \(file) from bundle due to missing \(type) value – \(context.debugDescription)")
+		} catch DecodingError.dataCorrupted(_) {
+			fatalError("Failed to decode \(file) from bundle because it appears to be invalid JSON")
+		} catch {
+			fatalError("Failed to decode \(file) from bundle: \(error.localizedDescription)")
+		}
 	}
 }
